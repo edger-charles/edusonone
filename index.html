@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Inversion Art Experience</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Linking the CSS file -->
+    <style>
+        /* Simple styling for sliders and labels */
+        .slider-container {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container"> <!-- Main container for content -->
+        <h1>Color Inversion Art Experience</h1> <!-- Main heading -->
+        
+        <!-- Canvas element for displaying the live feed with color inversion -->
+        <canvas id="canvas"></canvas>  
+        
+        <!-- Image element to display the captured snapshot -->
+        <img id="snapshot" alt="Snapshot" style="display: none; margin-top: 20px; max-width: 100%;" /> 
+    </div>
+
+    <div class="click">
+        <!-- Button to trigger color inversion -->
+        <button id="invertBtn">Invert Colors</button>
+        <!-- Button to take a snapshot -->
+        <button id="snapshotBtn">Take Snapshot</button>
+    </div>
+
+    <div class="controls">
+        <button id="controlsBtn">Adjust Effects</button>
+        <div id="effectControls" class="dropdown-content">
+            <div class="slider-container">
+                <label for="warmth">Warmth</label>
+                <input type="range" id="warmth" min="-100" max="100" value="0">
+            </div>
+            <div class="slider-container">
+                <label for="brightness">Brightness</label>
+                <input type="range" id="brightness" min="-100" max="100" value="0">
+            </div>
+            <div class="slider-container">
+                <label for="blur">Blur</label>
+                <input type="range" id="blur" min="0" max="20" value="0">
+            </div>
+            <div class="slider-container">
+                <label for="redIntensity">Red Intensity</label>
+                <input type="range" id="redIntensity" min="0" max="255" value="255">
+            </div>
+            <div class="slider-container">
+                <label for="greenIntensity">Green Intensity</label>
+                <input type="range" id="greenIntensity" min="0" max="255" value="255">
+            </div>
+            <div class="slider-container">
+                <label for="blueIntensity">Blue Intensity</label>
+                <input type="range" id="blueIntensity" min="0" max="255" value="255">
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script> <!-- Linking the JavaScript file -->
+</body> 
+</html>
