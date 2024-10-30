@@ -5,36 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Inversion Art Experience</title>
     <link rel="stylesheet" href="styles.css"> <!-- Linking the CSS file -->
-    <style>
-        /* Simple styling for sliders and labels */
-        .slider-container {
-            margin: 20px 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="range"] {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
     <div class="stars"></div>
-    <div class="container"> <!-- Main container for content -->
-        <h1>Color Inversion Art Experience</h1> <!-- Main heading -->
-        
-        <!-- Canvas element for displaying the live feed with color inversion -->
-        <canvas id="canvas"></canvas>  
-        
-        <!-- Image element to display the captured snapshot -->
-        <img id="snapshot" alt="Snapshot" style="display: none; margin-top: 20px; max-width: 100%;" /> 
+    <div class="container">
+        <h1>Color Inversion Art Experience</h1>
+        <canvas id="canvas"></canvas>
+        <img id="snapshot" alt="Snapshot" style="display: none; margin-top: 20px; max-width: 100%;" />
     </div>
 
     <div class="click">
-        <!-- Button to trigger color inversion -->
         <button id="invertBtn">Invert Colors</button>
-        <!-- Button to take a snapshot -->
         <button id="snapshotBtn">Take Snapshot</button>
     </div>
 
@@ -67,7 +48,10 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- Toggle Camera Button -->
+    <button id="toggleCameraBtn" class="floating-btn">Switch Camera</button>
+
     <script src="script.js"></script> <!-- Linking the JavaScript file -->
-</body> 
+</body>
 </html>
