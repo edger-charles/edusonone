@@ -14,42 +14,37 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* Maintain full height */
+    height: 100vh;
     background-color: #000; /* Dark background for starry effect */
-    color: #ffffff; /* White text for better contrast */
-    transition: background-color 0.5s ease; /* Smooth background transition */
-    padding: 20px; /* Add padding for all devices */
-    font-family: 'Poppins', sans-serif; /* Consistent font */
-    /* Remove overflow hidden to allow dropdown visibility */
-    background: url('resources/background1.png'); /* Replace with a starry background image */
+    color: #ffffff;
+    transition: background-color 0.5s ease;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: url('resources/background1.png'); /* Starry background */
     background-size: cover;
     background-repeat: no-repeat;
-    animation: spaceBackground 30s linear infinite; /* Infinite animation for background */
+    animation: spaceBackground 30s linear infinite;
 }
 
 /* Animated Background */
 @keyframes spaceBackground {
-    0% {
-        background-position: 0% 0%;
-    }
-    100% {
-        background-position: 100% 100%;
-    }
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
 }
 
 /* Stars Animation */
-@keyframes stars {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-}
-
 .stars {
     position: absolute;
     width: 200%;
     height: 200%;
-    background: url('path/to/your/stars.png') repeat; /* Starry background image */
-    animation: stars 60s linear infinite; /* Slow upward motion of stars */
-    z-index: -1; /* Send background to the back */
+    background: url('path/to/your/stars.png') repeat;
+    animation: stars 60s linear infinite;
+    z-index: -1;
+}
+
+@keyframes stars {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
 }
 
 /* Heavenly Bodies */
@@ -61,19 +56,15 @@ body {
 }
 
 @keyframes move {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-100vh);
-    }
+    from { transform: translateY(0); }
+    to { transform: translateY(-100vh); }
 }
 
-/* Add different classes for different heavenly bodies */
+/* Different heavenly bodies */
 .star1 {
     width: 10px;
     height: 10px;
-    background: yellow;
+    background: #6EB5FF;
     top: 80%;
     left: 10%;
 }
@@ -81,181 +72,132 @@ body {
 .star2 {
     width: 8px;
     height: 8px;
-    background: white;
+    background: #9ED86D;
     top: 60%;
     left: 30%;
 }
 
-/* Container styling */
+/* Container Styling */
 .container {
     text-align: center;
-    animation: fadeIn 1s ease; /* Fade-in animation for the container */
-    border-radius: 15px; /* Rounded corners for the container */
-    background-color: rgba(240, 240, 240, 0.9); /* Slightly transparent light background for contrast */
+    animation: fadeIn 1s ease;
+    border-radius: 15px;
+    background-color: rgba(240, 240, 240, 0.9);
     margin-top: 84px;
-    padding: 30px; /* Padding inside the container */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow effect */
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    color: #1730a6; /* Consistent text color */
 }
 
-/* Animation for fade-in effect */
+/* Fade-in Animation */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Canvas styling */
+/* Canvas Styling */
 canvas {
-    border: 2px solid #ff6302; /* Vibrant border color */
-    width: 100%; /* Make canvas responsive */
-    max-width: 640px; /* Maximum width */
-    height: auto; /* Maintain aspect ratio */
-    transition: filter 0.5s ease; /* Smooth transition for color inversion */
-    margin: 20px 0; /* Add margin above and below canvas */
+    border: 2px solid #ff6302;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    transition: filter 0.5s ease;
+    margin: 20px 0;
 }
 
-/* Snapshot image styling */
+/* Snapshot Image Styling */
 #snapshot {
-    border: 2px solid #ff6302; /* Border to match canvas */
-    border-radius: 15px; /* Rounded corners for snapshot */
-    margin-top: 20px; /* Space above the snapshot image */
-    max-width: 100%; /* Responsive width */
-    height: auto; /* Maintain aspect ratio */
+    border: 2px solid #ff6302;
+    border-radius: 15px;
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
 }
 
-/* Button container */
+/* Button Container */
 .click {
-    text-align: center; /* Center align button container */
+    text-align: center;
 }
 
-/* Button styling */
+/* Button Styling */
 button {
-    margin-top: 20px; /* Space above button */
-    padding: 12px 25px; /* Padding for button */
-    font-size: 18px; /* Font size for button */
-    border: none; /* Remove default border */
-    border-radius: 15px; /* Rounded corners */
-    background-color: #ff4500; /* Bright orange button color */
-    color: #ffffff; /* White text */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions for button effects */
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    background-color: #ff4500;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Button hover effect */
+/* Button Hover Effect */
 button:hover {
-    background-color: #e03e00; /* Darker shade on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    background-color: #e03e00;
+    transform: scale(1.05);
 }
 
-/* Drop-down styling */
+/* Dropdown Styling */
 #effectControls {
-    display: none; /* Hidden by default */
-    position: absolute; /* Positioning for dropdown */
-    background-color: #ffffff; /* Background color for dropdown */
-    border: 1px solid #ccc; /* Light border for dropdown */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for dropdown */
-    z-index: 1000; /* Ensure dropdown is above other elements */
-    padding: 15px; /* Padding inside dropdown */
-    margin-top: 10px; /* Space between button and dropdown */
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 15px;
+    margin-top: 10px;
 }
 
-/* Show dropdown when button is clicked */
+/* Show Dropdown on Focus */
 #controlsBtn:focus + #effectControls,
 #effectControls:hover {
-    display: block; /* Show dropdown on button focus or when hovered */
+    display: block;
 }
 
-/* Slider container styling */
+/* Slider Container */
 .slider-container {
-    margin-bottom: 15px; /* Space between sliders */
+    margin-bottom: 15px;
 }
 
-/* Specific styling for the Warmth label */
+/* Label Styling for Sliders */
 label[for="warmth"],
 label[for="brightness"],
 label[for="blur"],
 label[for="redIntensity"],
 label[for="greenIntensity"],
 label[for="blueIntensity"] {
-    color: #ff4500; /* Orange color */
-    font-weight: bold; /* Make text bold for emphasis */
+    color: #ff4500;
+    font-weight: bold;
 }
 
-/* Media Queries for responsive design */
+/* Media Queries for Responsive Design */
 @media (max-width: 480px) {
-    body {
-        height: auto; /* Allow content to define height */
-        padding: 10px; /* Less padding on very small screens */
-    }
-
-    canvas {
-        max-width: 100%; /* Full width on smaller screens */
-    }
-
-    #snapshot {
-        max-width: 100%; /* Full width for snapshot on smaller screens */
-    }
-
-    button {
-        width: 100%; /* Full width button on mobile */
-        font-size: 16px; /* Slightly smaller font size on mobile */
-    }
+    body { height: auto; padding: 10px; }
+    canvas { max-width: 100%; }
+    #snapshot { max-width: 100%; }
+    button { width: 100%; font-size: 16px; }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-    body {
-        padding: 15px; /* Moderate padding on small tablets */
-    }
-
-    canvas {
-        max-width: 90%; /* Wider canvas on small tablets */
-    }
-
-    #snapshot {
-        max-width: 90%; /* Slightly smaller max width for snapshot */
-    }
-
-    button {
-        font-size: 16px; /* Slightly smaller font size */
-    }
+    body { padding: 15px; }
+    canvas { max-width: 90%; }
+    #snapshot { max-width: 90%; }
+    button { font-size: 16px; }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    body {
-        padding: 20px; /* Normal padding for tablets */
-    }
-
-    canvas {
-        max-width: 80%; /* Reduce width on tablets */
-    }
-
-    #snapshot {
-        max-width: 80%; /* Match snapshot width to canvas on tablets */
-    }
-
-    button {
-        font-size: 17px; /* Slightly larger font size */
-    }
+    body { padding: 20px; }
+    canvas { max-width: 80%; }
+    #snapshot { max-width: 80%; }
+    button { font-size: 17px; }
 }
 
 @media (min-width: 1025px) {
-    body {
-        padding: 40px; /* Increased padding for larger screens */
-    }
-
-    canvas {
-        max-width: 640px; /* Maintain maximum width on desktops */
-    }
-
-    #snapshot {
-        max-width: 640px; /* Maintain maximum width for snapshot on desktops */
-    }
-
-    button {
-        font-size: 18px; /* Standard font size */
-    }
+    body { padding: 40px; }
+    canvas { max-width: 640px; }
+    #snapshot { max-width: 640px; }
+    button { font-size: 18px; }
 }
