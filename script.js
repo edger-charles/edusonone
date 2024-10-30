@@ -4,24 +4,40 @@ const invertBtn = document.getElementById('invertBtn');
 const snapshotBtn = document.getElementById('snapshotBtn'); // Button to take a snapshot
 const controlsBtn = document.getElementById('controlsBtn');
 const effectControls = document.getElementById('effectControls');
+const toggleCameraBtn = document.getElementById('toggleCameraBtn'); // New button for toggling camera
 
 let invertColors = false;
 let videoStream;
+let useFrontCamera = true; // Track the currently used camera
 
-// Access the user's webcam
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        const video = document.createElement('video');
-        video.srcObject = stream;
-        video.play();
-        videoStream = stream; // Keep the stream for potential future use
+// Function to start the video stream with the selected camera
+function startVideoStream() {
+    const constraints = {
+        video: {
+            facingMode: useFrontCamera ? 'user' : 'environment' // Switch between front and rear camera
+        }
+    };
 
-        // Start updating the canvas
-        requestAnimationFrame(() => updateCanvas(video));
-    })
-    .catch(err => {
-        console.error("Error accessing webcam: ", err);
-    });
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop()); // Stop previous video stream
+            }
+
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.play();
+            videoStream = stream;
+
+            requestAnimationFrame(() => updateCanvas(video));
+        })
+        .catch(err => {
+            console.error("Error accessing webcam: ", err);
+        });
+}
+
+// Call the function initially to start the video with the front camera
+startVideoStream();
 
 // Function to update the canvas with the video feed
 function updateCanvas(video) {
@@ -120,6 +136,13 @@ snapshotBtn.addEventListener('click', () => {
     document.body.appendChild(link); // Append the link to the body
     link.click(); // Trigger the download
     document.body.removeChild(link); // Remove the link from the document
+});
+
+// Toggle between front and rear cameras
+toggleCameraBtn.addEventListener('click', () => {
+    useFrontCamera = !useFrontCamera; // Toggle camera
+    startVideoStream(); // Restart the video stream with the new camera
+    toggleCameraBtn.textContent = useFrontCamera ? 'Switch to Rear Camera' : 'Switch to Front Camera';
 });
 
 // Optional: Stop the video stream when the user navigates away
