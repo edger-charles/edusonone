@@ -1,20 +1,20 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const invertBtn = document.getElementById('invertBtn');
-const snapshotBtn = document.getElementById('snapshotBtn'); 
+const snapshotBtn = document.getElementById('snapshotBtn'); // Button to take a snapshot
 const controlsBtn = document.getElementById('controlsBtn');
 const effectControls = document.getElementById('effectControls');
-const cameraSwitchBtn = document.getElementById('cameraSwitchBtn'); // Button to switch cameras
+const switchCameraBtn = document.getElementById('switchCameraBtn'); // Button to switch cameras
 
 let invertColors = false;
 let videoStream;
-let currentFacingMode = 'user'; // Default to the front camera
+let currentCamera = 'user'; // Default to the front camera
 
-// Function to start the video stream with the selected facing mode
-function startCamera(facingMode = 'user') {
+// Function to start the video stream
+function startVideoStream(camera) {
     const constraints = {
         video: {
-            facingMode: facingMode
+            facingMode: camera // Use 'user' for front camera and 'environment' for rear camera
         }
     };
 
@@ -23,9 +23,9 @@ function startCamera(facingMode = 'user') {
             const video = document.createElement('video');
             video.srcObject = stream;
             video.play();
-            videoStream = stream; // Store the stream for later use
+            videoStream = stream; // Keep the stream for potential future use
 
-            // Update the canvas with the video stream
+            // Start updating the canvas
             requestAnimationFrame(() => updateCanvas(video));
         })
         .catch(err => {
@@ -33,27 +33,13 @@ function startCamera(facingMode = 'user') {
         });
 }
 
-// Call the function to start with the default camera (front)
-startCamera(currentFacingMode);
-
-// Function to switch the camera
-cameraSwitchBtn.addEventListener('click', () => {
-    // Toggle facing mode
-    currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
-
-    // Stop the current video stream
-    if (videoStream) {
-        videoStream.getTracks().forEach(track => track.stop());
-    }
-
-    // Start the camera with the new facing mode
-    startCamera(currentFacingMode);
-});
+// Start the initial video stream
+startVideoStream(currentCamera);
 
 // Function to update the canvas with the video feed
 function updateCanvas(video) {
-    canvas.width = 640; 
-    canvas.height = 480;
+    canvas.width = 640; // Set a width for the canvas
+    canvas.height = 480; // Set a height for the canvas
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     applyEffects();
@@ -62,10 +48,11 @@ function updateCanvas(video) {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
 
+        // Invert colors
         for (let i = 0; i < data.length; i += 4) {
-            data[i] = 255 - data[i];       
-            data[i + 1] = 255 - data[i + 1]; 
-            data[i + 2] = 255 - data[i + 2]; 
+            data[i] = 255 - data[i];       // Red
+            data[i + 1] = 255 - data[i + 1]; // Green
+            data[i + 2] = 255 - data[i + 2]; // Blue
         }
 
         ctx.putImageData(imageData, 0, 0);
@@ -83,6 +70,7 @@ function applyEffects() {
     const greenIntensity = parseInt(document.getElementById('greenIntensity').value);
     const blueIntensity = parseInt(document.getElementById('blueIntensity').value);
 
+    // Create a temporary canvas to apply effects
     const tempCanvas = document.createElement('canvas');
     const tempCtx = tempCanvas.getContext('2d');
     tempCanvas.width = canvas.width;
@@ -93,26 +81,30 @@ function applyEffects() {
     const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
     const data = imageData.data;
 
+    // Apply brightness
     for (let i = 0; i < data.length; i += 4) {
-        data[i] = clamp(data[i] + brightness, 0, 255);       
-        data[i + 1] = clamp(data[i + 1] + brightness, 0, 255);
-        data[i + 2] = clamp(data[i + 2] + brightness, 0, 255);
+        data[i] = clamp(data[i] + brightness, 0, 255);       // Red
+        data[i + 1] = clamp(data[i + 1] + brightness, 0, 255); // Green
+        data[i + 2] = clamp(data[i + 2] + brightness, 0, 255); // Blue
     }
 
+    // Apply color intensity
     for (let i = 0; i < data.length; i += 4) {
-        data[i] = clamp((data[i] * redIntensity) / 255, 0, 255);       
-        data[i + 1] = clamp((data[i + 1] * greenIntensity) / 255, 0, 255); 
-        data[i + 2] = clamp((data[i + 2] * blueIntensity) / 255, 0, 255);
+        data[i] = clamp((data[i] * redIntensity) / 255, 0, 255);       // Red
+        data[i + 1] = clamp((data[i + 1] * greenIntensity) / 255, 0, 255); // Green
+        data[i + 2] = clamp((data[i + 2] * blueIntensity) / 255, 0, 255); // Blue
     }
 
     tempCtx.putImageData(imageData, 0, 0);
     
+    // Draw the adjusted image on the main canvas
     ctx.drawImage(tempCanvas, 0, 0);
     
+    // Apply blur if needed (optional)
     if (blur > 0) {
         ctx.filter = `blur(${blur}px)`;
         ctx.drawImage(canvas, 0, 0);
-        ctx.filter = 'none';
+        ctx.filter = 'none'; // Reset filter for future drawings
     }
 }
 
@@ -136,39 +128,53 @@ invertBtn.addEventListener('click', () => {
 snapshotBtn.addEventListener('click', () => {
     const snapshotData = canvas.toDataURL('image/png');
     const link = document.createElement('a');
-    link.href = snapshotData;
-    link.download = 'snapshot.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    link.href = snapshotData; // Set the link to the image data URL
+    link.download = 'snapshot.png'; // Specify the file name for the download
+    document.body.appendChild(link); // Append the link to the body
+    link.click(); // Trigger the download
+    document.body.removeChild(link); // Remove the link from the document
+});
+
+// Function to switch camera
+switchCameraBtn.addEventListener('click', () => {
+    // Stop the current video stream
+    if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop()); // Stop all video tracks
+    }
+
+    // Toggle camera type
+    currentCamera = currentCamera === 'user' ? 'environment' : 'user'; // Switch between front and rear cameras
+    startVideoStream(currentCamera); // Restart video stream with the new camera
 });
 
 // Optional: Stop the video stream when the user navigates away
 window.addEventListener('beforeunload', () => {
     if (videoStream) {
-        videoStream.getTracks().forEach(track => track.stop());
+        videoStream.getTracks().forEach(track => track.stop()); // Stop all video tracks
     }
 });
 
 // Function to create heavenly bodies
 function createHeavenlyBodies() {
-    const numberOfStars = 50;
-    const bodyContainer = document.body;
+    const numberOfStars = 50; // Adjust the number of stars
+    const bodyContainer = document.body; // Reference to the body
 
     for (let i = 0; i < numberOfStars; i++) {
         const star = document.createElement('div');
         star.classList.add('heavenly-body');
 
-        const size = Math.random() * 10 + 5;
+        // Set random position and size
+        const size = Math.random() * 10 + 5; // Random size between 5px to 15px
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
-        star.style.background = `rgba(255, 255, 255, ${Math.random()})`;
+        star.style.background = `rgba(255, 255, 255, ${Math.random()})`; // Random opacity
 
-        const leftPosition = Math.random() * 100;
-        const topPosition = Math.random() * 100;
+        const leftPosition = Math.random() * 100; // Random left position
+        const topPosition = Math.random() * 100; // Random top position
         star.style.left = `${leftPosition}%`;
         star.style.top = `${topPosition}%`;
 
+        // Append to body
         bodyContainer.appendChild(star);
     }
 }
