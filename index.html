@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Inversion Art Experience</title>
     <link rel="stylesheet" href="styles.css"> <!-- Linking the CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
 </head>
 <body>
     <div class="stars"></div>
-    <div class="container">
-        <h1>Color Inversion Art Experience</h1>
-        <canvas id="canvas"></canvas>
-        <img id="snapshot" alt="Snapshot" style="display: none; margin-top: 20px; max-width: 100%;" />
+    <div class="container"> <!-- Main container for content -->
+        <h1>Color Inversion Art Experience</h1> <!-- Main heading -->
+        
+        <!-- Canvas element for displaying the live feed with color inversion -->
+        <canvas id="canvas"></canvas>  
     </div>
 
     <div class="click">
+        <!-- Button to trigger color inversion -->
         <button id="invertBtn">Invert Colors</button>
+        <!-- Button to take a snapshot -->
         <button id="snapshotBtn">Take Snapshot</button>
+        <!-- Button to switch to the rear camera with a recycle icon -->
+        <button id="switchCameraBtn" title="Switch to Rear Camera">
+            <i class="fas fa-recycle"></i> <!-- Recycle icon -->
+        </button>
     </div>
 
     <div class="controls">
-        <button id="controlsBtn">Adjust Effects</button>
+        <button id="controlsBtn" aria-expanded="false">Adjust Effects</button>
         <div id="effectControls" class="dropdown-content">
             <div class="slider-container">
                 <label for="warmth">Warmth</label>
@@ -48,10 +56,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Toggle Camera Button -->
-    <button id="toggleCameraBtn" class="floating-btn">Switch Camera</button>
-
+    
     <script src="script.js"></script> <!-- Linking the JavaScript file -->
-</body>
+</body> 
 </html>
